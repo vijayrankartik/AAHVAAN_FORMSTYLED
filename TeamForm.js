@@ -1,51 +1,61 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import { makeStyles } from '@material-ui/core/styles';
-import Confirm from './Confirm';
-import AppBar from '@material-ui/core/AppBar';
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import Checkbox from '@material-ui/core/Checkbox'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import Input from '@material-ui/core/Input'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Confirm from './Confirm'
 
 const TeamForm = () => {
   const useStyles = makeStyles(theme => ({
     root: {
       background: 'white',
       color: 'black',
-
     },
     form: {
       spacing: 5
     },
     TextField: {
-      padding: 5,
-      margin: 5,
-      spacing: 5
+      padding: 0,
+      margin: 8,
+      spacing: 5,
+      width: '92vw',
+      marginLeft: '4vw'
     },
     InputLabel: {
       padding: 5,
       margin: 10,
+      marginLeft: '4vw',
       spacing: 5
     },
     Select: {
       padding: 5,
-      margin: 10,
-      spacing: 5
+      margin: 5,
+      marginLeft: '4vw',
+      spacing: 5,
+      width: '92vw',
     },
     Checkbox: {
       padding: 10,
       margin: 10,
-      spacing: 10
+      spacing: 10,
+      marginLeft: '4vw'
     },
     Button: {
-      marginLeft: theme.spacing(1),
+      marginLeft: '4vw',
       marginTop: theme.spacing(0),
       spacing: 5,
-    }  
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },  
   }));
 
   const classes = useStyles();
@@ -87,7 +97,7 @@ const TeamForm = () => {
   const handleSubmission = (event) => {
     // Handle the form submission.
     event.preventDefault()
-    if (choosenEvents.length === 0) {
+    if (choosenEvent === '') {
       alert('Please fill the events you want to participate in.')
       return
     }
@@ -97,7 +107,7 @@ const TeamForm = () => {
       email: document.getElementById('email').value,
       teamMemberCount: document.getElementById('member-count').value,
       teamMemberName: [],
-      events: choosenEvents,
+      events: choosenEvent,
       college: document.getElementById('college').value,
       stay: document.getElementById('stay-check').checked,
     }
@@ -118,6 +128,7 @@ const TeamForm = () => {
   // Event-handler for proceed button click
   const submitForm = () => {
     console.log('Clicked')
+    console.log(data)
     /*
     -
     - Write the code to push the userInput to database inside this function.
@@ -136,81 +147,95 @@ const TeamForm = () => {
     'Event6'
   ];
     
-  const [choosenEvents, setChoosenEvents] = React.useState([])
+  const [choosenEvent, setChoosenEvent] = React.useState('')
     
-  const handleChangeMultiple = event => {
-    setChoosenEvents(event.target.value)
+  const handleChangeEvent = event => {
+    setChoosenEvent(event.target.value)
   };
   
   // Function to generate the field for members.
   const generateNameFields = (num) => {
     const inputFields = []
     for (let i = 0; i < num; i++)
-      inputFields.push(<TextField required key={i} id={`member-name${i}`} label={`Member ${i+1}`} variant="outlined" fullWidth={true} />)
+      inputFields.push(<TextField className={classes.TextField} required key={i} id={`member-name${i}`} label={`Member ${i+1}`} variant="outlined" fullWidth={true} />)
     return inputFields
   }
 
   if (formView) {
     return(
-      <form className={classes.root} Validate autoComplete="off" onSubmit={handleSubmission}>
-          <h1 align="center">
+      <div align='center'>
+      <React.Fragment>
+        <h1 align="center">
           <AppBar color="secondary">
             TEAM REGISTRATION
           </AppBar> 
-          </h1><br /><br />
-        <TextField className={classes.TextField} id="name-leader" label="Name (Leader)" variant="outlined" fullWidth={true} required
-        value={nameInput} onChange={handleNameInputChange} />
-        <TextField className={classes.TextField} id="email" label="Email (Leader)" type="email" variant="outlined" fullWidth={true} required
-        value={emailInput} onChange={handleEmailInputChange} />
-        <TextField className={classes.TextField} id="member-count" label="Members count (excluding leader)" variant="outlined" 
-        type="number" InputProps={{ inputProps: { min: 1} }} fullWidth={true} value={additionalTeamMembers}
-        onChange={handleTeamNumberChange} required />
-        {generateNameFields(additionalTeamMembers)}
-        {/*Dropdopwn for events*/}
-        <InputLabel className={classes.InputLabel} id="mutiple-event-label">Events*</InputLabel>
-        <Select className={classes.Select}
-        labelId="mutiple-event-label"
-        id="mutiple-events"
-        multiple
-        value={choosenEvents}
-        onChange={handleChangeMultiple}
-        input={<Input />}
-        fullWidth={true}
-        required
-        >
-        {sportsEvents.map(event=> (
-          <MenuItem key={event} value={event}>
-          {event}
-          </MenuItem>
-        ))}
-        </Select>
-        {/*-------------------*/}
-        <TextField className={classes.TextField} id="college" label="College" variant="outlined" fullWidth={true} required 
-        value={collegeInput} onChange={handleCollegeInputChange} />
-        <FormControlLabel id="stay-label"
-         control={<Checkbox className={classes.Checkbox} id="stay-check" value="stayNeeded" fullWidth={true} checked={stayInput} onChange={handleStayInputChange} />}
-         label="Check here if you need accommodation"
-        />
-        {/*---Submit button---*/}<br />
-        <Button className={classes.Button} variant="contained" color="secondary" type="submit">
-        Submit
-        </Button>
-        {/*------------------*/}
-      </form>
+        </h1>
+        <br />
+        <br />
+        <br />
+        <br />
+        <form className={classes.root} autoComplete="off" onSubmit={handleSubmission}>
+          <TextField className={classes.TextField} id="name-leader" label="Name (Leader)" variant="outlined" required
+          value={nameInput} onChange={handleNameInputChange} />
+          <TextField className={classes.TextField} id="email" label="Email (Leader)" type="email" variant="outlined" required
+          value={emailInput} onChange={handleEmailInputChange} />
+          <TextField className={classes.TextField} id="member-count" label="Members count (excluding leader)" variant="outlined" 
+          type="number" InputProps={{ inputProps: { min: 1} }} fullWidth={true} value={additionalTeamMembers}
+          onChange={handleTeamNumberChange} required />
+          {generateNameFields(additionalTeamMembers)}
+
+          {/*Dropdopwn for events*/}
+          {/*Dropdopwn for events*/}
+          <FormControl required className={classes.formControl}>
+            <InputLabel className={classes.InputLabel} id="event-label">Events</InputLabel>
+            <Select
+            className={classes.Select}
+            labelId="event-label"
+            id="events"
+            value={choosenEvent}
+            onChange={handleChangeEvent}
+            input={<Input />}
+            >
+              <MenuItem value="" disabled>Events</MenuItem>
+              {sportsEvents.map(event=> (
+                <MenuItem key={event} value={event}>
+                {event}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {/*-------------------*/}
+
+          <TextField className={classes.TextField} id="college" label="College" variant="outlined" required 
+          value={collegeInput} onChange={handleCollegeInputChange} />
+          <FormControlLabel id="stay-label"
+          control={<Checkbox className={classes.Checkbox} id="stay-check" value="stayNeeded" checked={stayInput} onChange={handleStayInputChange} />}
+          label="Check here if you need accommodation"
+          />
+          {/*---Submit button---*/}<br />
+          <Button className={classes.Button} variant="contained" color="secondary" type="submit">
+          Submit
+          </Button>
+          {/*------------------*/}
+        </form>
+      </React.Fragment>
+      </div>
     )
 
   } else {
 
     return(
+      <div align='center'>
       <React.Fragment>
         <Confirm data={data} />
-        <Button variant="contained" color="primary" onClick={handleEdit}>
+        <Button className={classes.Button} variant="contained" color="primary" onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="contained" color="secondary" onClick={submitForm}>
+        <Button className={classes.Button} variant="contained" color="secondary" onClick={submitForm}>
           Proceed
         </Button>
       </React.Fragment>
+      </div>
     )
   }
 }
