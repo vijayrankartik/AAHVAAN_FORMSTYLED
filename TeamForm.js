@@ -11,6 +11,10 @@ import Input from '@material-ui/core/Input'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Confirm from './Confirm'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Box from '@material-ui/core/Box'
+
 
 const TeamForm = () => {
   const useStyles = makeStyles(theme => ({
@@ -56,6 +60,11 @@ const TeamForm = () => {
       margin: theme.spacing(1),
       minWidth: 120,
     },  
+    Card: {
+      border: '0px solid white',
+      boxShadow: 5,
+      borderRadius: '50px'
+    },
   }));
 
   const classes = useStyles();
@@ -164,8 +173,7 @@ const TeamForm = () => {
   if (formView) {
     return(
       <div align='center'>
-      <React.Fragment>
-        <h1 align="center">
+       <h1 align="center">
           <AppBar color="secondary">
             TEAM REGISTRATION
           </AppBar> 
@@ -174,7 +182,11 @@ const TeamForm = () => {
         <br />
         <br />
         <br />
-        <form className={classes.root} autoComplete="off" onSubmit={handleSubmission}>
+        <Card className={classes.Card} variant='outlined'>
+      <CardContent>
+      <Box boxShadow={5}>
+      <React.Fragment>
+          <form className={classes.root} autoComplete="off" onSubmit={handleSubmission}>
           <TextField className={classes.TextField} id="name-leader" label="Name (Leader)" variant="outlined" required
           value={nameInput} onChange={handleNameInputChange} />
           <TextField className={classes.TextField} id="email" label="Email (Leader)" type="email" variant="outlined" required
@@ -219,6 +231,9 @@ const TeamForm = () => {
           {/*------------------*/}
         </form>
       </React.Fragment>
+      </Box>
+      </CardContent>
+      </Card>
       </div>
     )
 
@@ -226,6 +241,7 @@ const TeamForm = () => {
 
     return(
       <div align='center'>
+        <br /><br />
       <React.Fragment>
         <Confirm data={data} />
         <Button className={classes.Button} variant="contained" color="primary" onClick={handleEdit}>
