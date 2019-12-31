@@ -11,6 +11,9 @@ import Input from '@material-ui/core/Input'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Confirm from './Confirm'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Box from '@material-ui/core/Box'
 
 const SingleForm = () => {
   const useStyles = makeStyles(theme => ({
@@ -51,10 +54,16 @@ const SingleForm = () => {
       marginLeft: '4vw',
       marginTop: theme.spacing(0),
       spacing: 5,
+      align: 'center'
     },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
+    },
+    Card: {
+      border: '0px solid white',
+      boxShadow: 5,
+      borderRadius: '50px'
     },
   }));
 
@@ -149,16 +158,19 @@ const SingleForm = () => {
   if (formView) {
     return (
       <div align='center'>
-      <React.Fragment>
-        <h1 align="center">
-          <AppBar color="secondary">
+       <h1 align="center">
+        <AppBar color="secondary">
             SINGLE REGISTRATION
-          </AppBar> 
-        </h1>
-        <br />
-        <br />
-        <br />
-        <br />
+        </AppBar> 
+      </h1>
+      <br />
+      <br /><br /><br />
+      <Card className={classes.Card} variant='outlined'>
+      <CardContent>
+      <Box boxShadow={5}>
+      <div align='center'>
+      <React.Fragment>
+
         <form className={classes.root} autoComplete="off" onSubmit={handleSubmission} >
           <TextField className={classes.TextField} id="name" label="Name" variant="outlined" required
           value={nameInput} onChange={handleNameInputChange} />
@@ -192,14 +204,16 @@ const SingleForm = () => {
           control={<Checkbox className={classes.Checkbox} id="stay-check" value="stayNeeded" checked={stayInput} onChange={handleStayInputChange} />}
           label="Check here if you need accommodation"
           />
-          {/*---Submit button---*/}
           <br />
-          <Button className={classes.Button} variant="contained" color="secondary" type="submit">
-            Submit
-          </Button>
-          {/*------------------*/}
+         <Button className={classes.Button} variant="contained" color="secondary" type="submit">
+           Submit
+        </Button>
         </form>
       </React.Fragment>
+      </div>
+      </Box>
+      </CardContent>
+      </Card>
       </div>
     )
 
@@ -207,6 +221,7 @@ const SingleForm = () => {
 
     return(
       <div align='center'>
+        <br /><br />
       <React.Fragment>
         <Confirm data={data} />
         <Button className={classes.Button} variant="contained" color="primary" onClick={handleEdit}>
